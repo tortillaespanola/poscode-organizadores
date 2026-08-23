@@ -29,5 +29,35 @@
     ],
     "anulada": false,
     "cierre_id": null
+  },
+  {
+    "id": "v_7c240499-8ff2-4a2a-a499-6812cc79cc54",
+    "fecha": "2026-08-23T09:19:20.078Z",
+    "items": [
+      {
+        "nombre": "Agua",
+        "precio": 4,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Café",
+        "precio": 3,
+        "cantidad": 1
+      }
+    ],
+    "total": 11,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 10
+      },
+      {
+        "metodo": "Twint",
+        "importe": 1
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
   }
 ]
