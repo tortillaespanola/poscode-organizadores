@@ -1,16 +1,1 @@
-[
-  {
-    "id": "c_92b855c1-976e-4b10-b288-d4b21e5d40df",
-    "punto_venta_id": "caseta",
-    "fecha": "2026-08-23T09:19:55.967Z",
-    "total_cash": 10,
-    "total_twint": 19,
-    "total_tarjeta": 0,
-    "total": 29,
-    "num_ventas": 2,
-    "venta_ids": [
-      "v_0191ec73-9565-48c4-a3ea-e1e84cf1f5c3",
-      "v_7c240499-8ff2-4a2a-a499-6812cc79cc54"
-    ]
-  }
-]
+[]
