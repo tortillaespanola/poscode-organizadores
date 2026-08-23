@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "v_0191ec73-9565-48c4-a3ea-e1e84cf1f5c3",
+    "fecha": "2026-08-23T09:19:09.573Z",
+    "items": [
+      {
+        "nombre": "Estrella SIN",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Café",
+        "precio": 3,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Cortado",
+        "precio": 3,
+        "cantidad": 1
+      }
+    ],
+    "total": 18,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 18
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  }
+]
