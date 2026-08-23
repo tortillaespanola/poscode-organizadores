@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Caja · Evento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button id="btn-logo" class="brand-logo" aria-label="Ir a Venta">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="9" y="2.5" width="6" height="4.5" rx="1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M9 4 L5.3 3.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <rect x="4" y="7" width="16" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <rect x="6" y="9" width="5" height="3" rx="0.5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+      <circle cx="14.5" cy="10" r="0.6" fill="currentColor"/>
+      <circle cx="17" cy="10" r="0.6" fill="currentColor"/>
+      <circle cx="14.5" cy="12.5" r="0.6" fill="currentColor"/>
+      <circle cx="17" cy="12.5" r="0.6" fill="currentColor"/>
+      <rect x="2.5" y="15.5" width="19" height="5" rx="1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="12" cy="18" r="1" fill="currentColor"/>
+    </svg>
+  </button>
+  <select id="select-punto-venta" class="punto-venta-select" aria-label="Punto de venta activo"></select>
+  <button id="btn-ajustes" class="icon-btn" aria-label="Ajustes">[ AJUSTES ]</button>
+</header>
+
+<main id="app">
+
+  <!-- PANTALLA: VENTA -->
+  <section id="pantalla-venta" class="pantalla activa">
+    <div class="productos-grid" id="productos-grid"></div>
+
+    <div class="ticket">
+      <div class="ticket-header">
+        <span class="eyebrow">Ticket actual</span>
+        <button id="btn-vaciar-ticket" class="link-btn">Vaciar</button>
+      </div>
+      <ul id="ticket-lista" class="ticket-lista">
+        <li class="ticket-vacio">Toca un artículo para empezar</li>
+      </ul>
+      <div class="ticket-total">
+        <span>Total</span>
+        <span id="ticket-total-valor">0 CHF</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANTALLA: HISTORIAL -->
+  <section id="pantalla-historial" class="pantalla">
+    <div class="seccion-header">
+      <h2>Historial de ventas</h2>
+      <button id="btn-refrescar-historial" class="link-btn">Actualizar</button>
+    </div>
+    <ul id="historial-lista" class="historial-lista"></ul>
+  </section>
+
+  <!-- PANTALLA: CIERRE -->
+  <section id="pantalla-cierre" class="pantalla">
+    <div class="seccion-header">
+      <h2>Cierre de caja</h2>
+      <button id="btn-refrescar-cierre" class="link-btn">Actualizar</button>
+    </div>
+
+    <div class="resumen-cierre">
+      <div class="resumen-fila">
+        <span>Ventas pendientes de cierre</span>
+        <span id="cierre-num-ventas">0</span>
+      </div>
+      <div class="resumen-fila">
+        <span>Total Cash</span>
+        <span id="cierre-total-cash">0 CHF</span>
+      </div>
+      <div class="resumen-fila">
+        <span>Total Twint</span>
+        <span id="cierre-total-twint">0 CHF</span>
+      </div>
+      <div class="resumen-fila">
+        <span>Total Tarjeta</span>
+        <span id="cierre-total-tarjeta">0 CHF</span>
+      </div>
+      <div class="resumen-fila resumen-fila--total">
+        <span>Total caja</span>
+        <span id="cierre-total">0 CHF</span>
+      </div>
+    </div>
+
+    <button id="btn-cerrar-caja" class="btn-principal">Cerrar caja y poner a cero</button>
+
+    <div class="seccion-header seccion-header--espaciada">
+      <h2>Cierres anteriores</h2>
+    </div>
+    <ul id="cierres-lista" class="historial-lista"></ul>
+  </section>
+
+  <!-- PANTALLA: AJUSTES -->
+  <section id="pantalla-ajustes" class="pantalla">
+    <div class="seccion-header">
+      <h2>Ajustes de conexión</h2>
+    </div>
+    <p class="ajustes-nota">Estos datos se guardan solo en este móvil. El token nunca se sube al repositorio.</p>
+
+    <label class="campo">
+      <span>Usuario u organización de GitHub</span>
+      <input id="input-owner" type="text" placeholder="p. ej. hsblas" autocomplete="off">
+    </label>
+    <label class="campo">
+      <span>Repositorio</span>
+      <input id="input-repo" type="text" placeholder="p. ej. pos-evento" autocomplete="off">
+    </label>
+    <label class="campo">
+      <span>Rama</span>
+      <input id="input-branch" type="text" placeholder="main" autocomplete="off">
+    </label>
+    <label class="campo">
+      <span>Token de acceso personal (fine-grained, permiso Contents: Read and write)</span>
+      <input id="input-token" type="password" placeholder="github_pat_..." autocomplete="off">
+    </label>
+
+    <button id="btn-guardar-ajustes" class="btn-principal">Guardar</button>
+    <button id="btn-probar-conexion" class="btn-secundario">Probar conexión</button>
+    <p id="ajustes-estado" class="ajustes-estado"></p>
+  </section>
+
+</main>
+
+<!-- Barra de pago fija (solo visible en pantalla Venta) -->
+<div id="pago-fija" class="pago-fija">
+  <p class="eyebrow-divider">── MÉTODO DE PAGO ──</p>
+  <div class="pago-botones">
+    <button id="btn-pago-cash" class="pago-btn" disabled>Cash</button>
+    <button id="btn-pago-twint" class="pago-btn" disabled>Twint</button>
+    <button id="btn-pago-tarjeta" class="pago-btn" disabled>Tarjeta</button>
+  </div>
+  <button id="btn-pago-dividir" class="link-btn link-btn--centrado" disabled>Dividir pago</button>
+</div>
+
+<nav class="tabbar">
+  <button class="tab-btn activa" data-pantalla="venta">Venta</button>
+  <button class="tab-btn" data-pantalla="historial">Historial</button>
+  <button class="tab-btn" data-pantalla="cierre">Caja</button>
+</nav>
+
+<!-- MODAL: cobro en Cash (pago único) -->
+<div id="modal-cash" class="modal-backdrop oculto">
+  <div class="modal-cobro">
+    <p class="eyebrow">Cobro en Cash</p>
+    <div class="cobro-total-row">
+      <span>Total a cobrar</span>
+      <span id="cash-total-valor">0 CHF</span>
+    </div>
+    <label class="campo-cobro">
+      <span>Recibido (opcional)</span>
+      <input id="input-cash-recibido" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Importe entregado">
+    </label>
+    <div class="importes-rapidos" data-target="cash">
+      <button type="button" class="importe-rapido-btn" data-importe="10">10</button>
+      <button type="button" class="importe-rapido-btn" data-importe="20">20</button>
+      <button type="button" class="importe-rapido-btn" data-importe="50">50</button>
+      <button type="button" class="importe-rapido-btn" data-importe="100">100</button>
+    </div>
+    <p id="cash-cambio" class="cobro-cambio"></p>
+    <div class="dividir-acciones">
+      <button id="btn-cash-cancelar" class="btn-secundario">Cancelar</button>
+      <button id="btn-cash-confirmar" class="btn-principal">Confirmar venta</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: pago dividido -->
+<div id="modal-dividir" class="modal-backdrop oculto">
+  <div class="modal-cobro">
+    <p class="eyebrow">Pago dividido</p>
+    <div class="cobro-total-row">
+      <span>Total a repartir</span>
+      <span id="dividir-total-valor">0 CHF</span>
+    </div>
+
+    <div class="dividir-fila">
+      <label for="input-dividir-cash">Cash</label>
+      <input id="input-dividir-cash" type="number" min="0" step="0.01" inputmode="decimal" data-metodo="cash">
+      <span class="dividir-unidad">CHF</span>
+      <button type="button" class="resto-btn" data-target="cash">Resto</button>
+    </div>
+
+    <div class="dividir-fila">
+      <label for="input-dividir-twint">Twint</label>
+      <input id="input-dividir-twint" type="number" min="0" step="0.01" inputmode="decimal" data-metodo="twint">
+      <span class="dividir-unidad">CHF</span>
+      <button type="button" class="resto-btn" data-target="twint">Resto</button>
+    </div>
+
+    <div class="dividir-fila">
+      <label for="input-dividir-tarjeta">Tarjeta</label>
+      <input id="input-dividir-tarjeta" type="number" min="0" step="0.01" inputmode="decimal" data-metodo="tarjeta">
+      <span class="dividir-unidad">CHF</span>
+      <button type="button" class="resto-btn" data-target="tarjeta">Resto</button>
+    </div>
+
+    <p id="dividir-estado" class="dividir-estado"></p>
+    <div class="dividir-acciones">
+      <button id="btn-dividir-cancelar" class="btn-secundario">Cancelar</button>
+      <button id="btn-dividir-confirmar" class="btn-principal" disabled>Confirmar pago dividido</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="loading-overlay" class="loading-overlay"><div class="spinner"></div></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

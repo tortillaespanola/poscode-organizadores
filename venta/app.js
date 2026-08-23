@@ -2,42 +2,35 @@
    CAJA EVENTO — POS sencillo con persistencia en GitHub
    ========================================================= */
 
-const RUTA_PUNTOS_VENTA = "data/puntos_venta.json";
-const RUTA_ARTICULOS = "data/articulos.json";
-const RUTA_CIERRES = "data/cierres.json";
-const CONFIG_KEY = "caja_evento_config";
+import {
+  config,
+  guardarConfig,
+  configCompleta,
+  generarId,
+  rutaVentas,
+  RUTA_CIERRES,
+  githubGetFile,
+  guardarConReintento,
+  validarConexion,
+  pagosDeVenta,
+  totalesPorMetodo,
+  resumenPago,
+  ventasPendientes,
+  construirCierre,
+} from "../js/api-github.js";
+
+// Rutas de datos estáticos (puntos de venta y catálogo): relativas a esta
+// página (/venta/), no a la raíz del repo como las rutas de la API de GitHub.
+const RUTA_PUNTOS_VENTA = "../data/puntos_venta.json";
+const RUTA_ARTICULOS = "../data/articulos.json";
 const PUNTO_ACTIVO_KEY = "caja_evento_punto_activo";
 
-function rutaVentas(punto = puntoActivo) {
-  return `data/ventas_${punto}.json`;
-}
-
-let config = cargarConfig();
 let ticket = [];              // [{nombre, precio, cantidad}]
 let cacheVentas = null;       // {sha, data:[...]}
 let cacheCierres = null;      // {sha, data:[...]}
 let puntoActivo = null;       // id del punto activo, resuelto en el arranque
 let puntosVenta = [];         // [{id, nombre}], de data/puntos_venta.json
 let catalogoArticulos = [];   // [{nombre, precio, puntos_venta}], de data/articulos.json
-
-/* ---------------- Config ---------------- */
-
-function cargarConfig() {
-  try {
-    return JSON.parse(localStorage.getItem(CONFIG_KEY)) || {};
-  } catch (e) {
-    return {};
-  }
-}
-
-function guardarConfig(c) {
-  config = c;
-  localStorage.setItem(CONFIG_KEY, JSON.stringify(c));
-}
-
-function configCompleta() {
-  return config.owner && config.repo && config.branch && config.token;
-}
 
 /* ---------------- Punto de venta activo ---------------- */
 
@@ -107,198 +100,6 @@ document.getElementById("select-punto-venta").addEventListener("change", (e) => 
   cambiarPuntoActivo(e.target.value);
 });
 
-/* ---------------- Utilidades base64 (UTF-8 safe) ---------------- */
-
-function b64Encode(str) {
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p1) =>
-    String.fromCharCode("0x" + p1)
-  ));
-}
-
-function b64Decode(str) {
-  return decodeURIComponent(
-    atob(str)
-      .split("")
-      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-      .join("")
-  );
-}
-
-/* ---------------- Identificadores ---------------- */
-
-function generarId(prefijo) {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-    return `${prefijo}_${crypto.randomUUID()}`;
-  }
-  return `${prefijo}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-}
-
-/* ---------------- GitHub API ---------------- */
-
-function apiUrl(path) {
-  return `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
-}
-
-async function validarConexion() {
-  const resRepo = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${config.token}`,
-      Accept: "application/vnd.github+json",
-    },
-  });
-  if (resRepo.status === 401) {
-    throw new Error("Token inválido o caducado (401).");
-  }
-  if (resRepo.status === 404) {
-    throw new Error("Repositorio no encontrado, o el token no tiene acceso a él (404). Revisa usuario y repositorio.");
-  }
-  if (!resRepo.ok) {
-    throw new Error(`Error comprobando el repositorio (${resRepo.status}).`);
-  }
-  const repoJson = await resRepo.json();
-  if (repoJson.permissions && repoJson.permissions.push === false) {
-    throw new Error("El token no tiene permiso de escritura (push) en este repositorio.");
-  }
-
-  const resBranch = await fetch(
-    `https://api.github.com/repos/${config.owner}/${config.repo}/branches/${encodeURIComponent(config.branch)}`,
-    {
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${config.token}`,
-        Accept: "application/vnd.github+json",
-      },
-    }
-  );
-  if (resBranch.status === 404) {
-    throw new Error(`La rama "${config.branch}" no existe en este repositorio.`);
-  }
-  if (!resBranch.ok) {
-    throw new Error(`Error comprobando la rama (${resBranch.status}).`);
-  }
-
-  // Comprobación real de escritura: el permiso "push" del repo (arriba) refleja el
-  // rol de la cuenta, no lo que el token en sí tiene concedido. Un fine-grained PAT
-  // puede leer perfectamente y aun así no tener permiso de Contents: Read and write,
-  // lo cual solo se detecta intentando escribir de verdad.
-  const RUTA_TEST = "data/.conexion_test.json";
-  let shaTest = null;
-  const resGetTest = await fetch(`${apiUrl(RUTA_TEST)}?ref=${encodeURIComponent(config.branch)}`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${config.token}`,
-      Accept: "application/vnd.github+json",
-    },
-  });
-  if (resGetTest.ok) {
-    shaTest = (await resGetTest.json()).sha;
-  }
-
-  const bodyTest = {
-    message: "Test de conexión (Probar conexión en Ajustes)",
-    content: b64Encode(JSON.stringify({ ok: true, ts: new Date().toISOString() })),
-    branch: config.branch,
-  };
-  if (shaTest) bodyTest.sha = shaTest;
-
-  const resPutTest = await fetch(apiUrl(RUTA_TEST), {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${config.token}`,
-      Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyTest),
-  });
-  if (resPutTest.status === 403) {
-    throw new Error(
-      'El token no tiene permiso de escritura en Contents (403 "Resource not accessible by personal access token"). ' +
-        "Revisa en GitHub el token: Repository permissions → Contents debe estar en \"Read and write\"."
-    );
-  }
-  if (!resPutTest.ok) {
-    const texto = await resPutTest.text().catch(() => "");
-    throw new Error(`Error probando escritura (${resPutTest.status}): ${texto}`);
-  }
-}
-
-async function githubGetFile(path) {
-  const res = await fetch(`${apiUrl(path)}?ref=${encodeURIComponent(config.branch)}`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${config.token}`,
-      Accept: "application/vnd.github+json",
-    },
-  });
-  if (res.status === 404) {
-    return { sha: null, data: [] };
-  }
-  if (!res.ok) {
-    throw new Error(`Error leyendo ${path}: ${res.status}`);
-  }
-  const json = await res.json();
-  const contenido = b64Decode(json.content.replace(/\n/g, ""));
-  let data;
-  try {
-    data = JSON.parse(contenido);
-  } catch (e) {
-    data = [];
-  }
-  return { sha: json.sha, data };
-}
-
-async function githubPutFile(path, data, sha, mensaje) {
-  const body = {
-    message: mensaje,
-    content: b64Encode(JSON.stringify(data, null, 2)),
-    branch: config.branch,
-  };
-  if (sha) body.sha = sha;
-
-  const res = await fetch(apiUrl(path), {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${config.token}`,
-      Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!res.ok) {
-    const texto = await res.text().catch(() => "");
-    throw new Error(`Error guardando ${path}: ${res.status} ${texto}`);
-  }
-  const json = await res.json();
-  return json.content.sha;
-}
-
-/* Guarda con reintento si el sha ha cambiado entre-tanto (409).
-   mutarFn puede devolver null para indicar "nada que escribir" (p. ej. un
-   intento anterior ya se aplicó de verdad aunque el cliente no lo supiera),
-   en cuyo caso se trata como éxito sin llamar a la API. */
-async function guardarConReintento(path, mutarFn, mensaje, cache, onReintento) {
-  for (let intento = 0; intento < 3; intento++) {
-    const actual = cache.get();
-    const nuevoData = mutarFn(JSON.parse(JSON.stringify(actual.data)));
-    if (nuevoData === null) return actual.data;
-    try {
-      const nuevoSha = await githubPutFile(path, nuevoData, actual.sha, mensaje);
-      cache.set({ sha: nuevoSha, data: nuevoData });
-      return nuevoData;
-    } catch (e) {
-      if (String(e.message).includes("409") && intento < 2) {
-        if (onReintento) onReintento(intento + 1);
-        const fresco = await githubGetFile(path);
-        cache.set(fresco);
-        continue;
-      }
-      throw e;
-    }
-  }
-}
-
 const cacheVentasApi = {
   get: () => cacheVentas,
   set: (v) => (cacheVentas = v),
@@ -309,42 +110,12 @@ const cacheCierresApi = {
 };
 
 async function asegurarCacheVentas() {
-  if (!cacheVentas) cacheVentas = await githubGetFile(rutaVentas());
+  if (!cacheVentas) cacheVentas = await githubGetFile(rutaVentas(puntoActivo));
   return cacheVentas;
 }
 async function asegurarCacheCierres() {
   if (!cacheCierres) cacheCierres = await githubGetFile(RUTA_CIERRES);
   return cacheCierres;
-}
-
-/* ---------------- Modelo: pagos por venta ---------------- */
-
-// Ventas antiguas no tienen "pagos"; se derivan de metodo_pago/total para
-// que todo el código de abajo (historial, cierre, CSV) pueda asumir siempre
-// que existe el array "pagos", sin migrar el JSON histórico.
-function pagosDeVenta(v) {
-  if (Array.isArray(v.pagos) && v.pagos.length > 0) return v.pagos;
-  return [{ metodo: v.metodo_pago, importe: v.total }];
-}
-
-function totalesPorMetodo(ventas) {
-  let cash = 0;
-  let twint = 0;
-  let tarjeta = 0;
-  ventas.forEach((v) => {
-    pagosDeVenta(v).forEach((p) => {
-      if (p.metodo === "Cash") cash += p.importe;
-      else if (p.metodo === "Twint") twint += p.importe;
-      else if (p.metodo === "Tarjeta") tarjeta += p.importe;
-    });
-  });
-  return { cash, twint, tarjeta };
-}
-
-function resumenPago(v) {
-  const pagos = pagosDeVenta(v);
-  if (pagos.length <= 1) return pagos[0].metodo;
-  return pagos.map((p) => `${p.metodo} ${p.importe}`).join(" / ");
 }
 
 /* ---------------- UI: navegación de pantallas ---------------- */
@@ -492,7 +263,7 @@ async function registrarVenta(pagos, botonOrigen) {
   try {
     await asegurarCacheVentas();
     await guardarConReintento(
-      rutaVentas(),
+      rutaVentas(puntoActivo),
       (data) => {
         // Si un intento anterior sí llegó a guardarse en GitHub (pero el
         // cliente no recibió la respuesta a tiempo y reintentó), no la
@@ -754,7 +525,7 @@ async function refrescarHistorial() {
   const lista = document.getElementById("historial-lista");
   setCargando(true);
   try {
-    cacheVentas = await githubGetFile(rutaVentas());
+    cacheVentas = await githubGetFile(rutaVentas(puntoActivo));
     cacheCierres = await githubGetFile(RUTA_CIERRES);
 
     lista.innerHTML = "";
@@ -805,7 +576,7 @@ document.getElementById("historial-lista").addEventListener("click", async (e) =
   try {
     await asegurarCacheVentas();
     await guardarConReintento(
-      rutaVentas(),
+      rutaVentas(puntoActivo),
       (data) => {
         const v = data.find((x) => x.id === id);
         if (v) v.anulada = true;
@@ -828,15 +599,11 @@ document.getElementById("btn-refrescar-historial").addEventListener("click", ref
 
 /* ---------------- Pantalla: Cierre de caja ---------------- */
 
-function ventasPendientes(ventas) {
-  return ventas.filter((v) => !v.anulada && !v.cierre_id);
-}
-
 async function refrescarCierre() {
   if (!configCompleta()) return;
   setCargando(true);
   try {
-    cacheVentas = await githubGetFile(rutaVentas());
+    cacheVentas = await githubGetFile(rutaVentas(puntoActivo));
     cacheCierres = await githubGetFile(RUTA_CIERRES);
 
     const pendientes = ventasPendientes(cacheVentas.data);
@@ -887,27 +654,14 @@ document.getElementById("btn-cerrar-caja").addEventListener("click", async () =>
   const pendientes = ventasPendientes(cacheVentas.data);
   if (pendientes.length === 0) return;
 
-  const { cash: totalCash, twint: totalTwint, tarjeta: totalTarjeta } = totalesPorMetodo(pendientes);
-  const total = totalCash + totalTwint + totalTarjeta;
+  const { cash, twint, tarjeta } = totalesPorMetodo(pendientes);
+  const total = cash + twint + tarjeta;
 
   if (!confirm(`¿Cerrar caja con ${pendientes.length} ventas (${total} CHF)? Esto pondrá el contador a cero.`)) return;
 
   setCargando(true);
   try {
-    // El cierre incluye también las ventas anuladas sin cierre_id (aunque no
-    // sumen en los totales) para que queden agrupadas en su sesión y no se
-    // muestren como "sesión actual" para siempre en el Historial.
-    const sinCerrar = cacheVentas.data.filter((v) => !v.cierre_id);
-    const cierre = {
-      id: generarId("c"),
-      fecha: new Date().toISOString(),
-      total_cash: totalCash,
-      total_twint: totalTwint,
-      total_tarjeta: totalTarjeta,
-      total,
-      num_ventas: pendientes.length,
-      venta_ids: sinCerrar.map((v) => v.id),
-    };
+    const cierre = construirCierre(puntoActivo, cacheVentas.data);
 
     await asegurarCacheCierres();
     await guardarConReintento(
@@ -922,7 +676,7 @@ document.getElementById("btn-cerrar-caja").addEventListener("click", async () =>
     );
 
     await guardarConReintento(
-      rutaVentas(),
+      rutaVentas(puntoActivo),
       (data) => {
         data.forEach((v) => {
           if (cierre.venta_ids.includes(v.id)) v.cierre_id = cierre.id;
