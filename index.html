@@ -26,6 +26,7 @@
       <circle cx="12" cy="18" r="1" fill="currentColor"/>
     </svg>
   </button>
+  <select id="select-punto-venta" class="punto-venta-select" aria-label="Punto de venta activo"></select>
   <button id="btn-ajustes" class="icon-btn" aria-label="Ajustes">[ AJUSTES ]</button>
 </header>
 
@@ -33,20 +34,7 @@
 
   <!-- PANTALLA: VENTA -->
   <section id="pantalla-venta" class="pantalla activa">
-    <div class="productos-grid">
-      <button class="producto-btn" data-nombre="Pincho" data-precio="6">
-        <span class="p-nombre">Pincho</span>
-        <span class="p-precio">6 CHF</span>
-      </button>
-      <button class="producto-btn" data-nombre="Rebujito" data-precio="6">
-        <span class="p-nombre">Rebujito</span>
-        <span class="p-precio">6 CHF</span>
-      </button>
-      <button class="producto-btn" data-nombre="Tortilla Entera" data-precio="39">
-        <span class="p-nombre">Tortilla Entera</span>
-        <span class="p-precio">39 CHF</span>
-      </button>
-    </div>
+    <div class="productos-grid" id="productos-grid"></div>
 
     <div class="ticket">
       <div class="ticket-header">

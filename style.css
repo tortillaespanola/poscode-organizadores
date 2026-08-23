@@ -70,6 +70,22 @@ input{
   text-transform:uppercase;
 }
 .icon-btn:active{opacity:1;}
+.punto-venta-select{
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:var(--ink);
+  background:var(--gold);
+  border:2px solid var(--ink);
+  border-radius:8px;
+  padding:7px 10px;
+  max-width:150px;
+  text-align:center;
+  text-align-last:center;
+}
+.punto-venta-select:active{background:var(--gold-light);}
 
 /* ---------- Layout general ---------- */
 #app{

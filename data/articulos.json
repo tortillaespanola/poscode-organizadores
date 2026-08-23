@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "Pincho",
+    "precio": 6,
+    "puntos_venta": ["puntoA", "puntoB", "puntoC"]
+  },
+  {
+    "nombre": "Rebujito",
+    "precio": 6,
+    "puntos_venta": ["puntoA", "puntoB", "puntoC"]
+  },
+  {
+    "nombre": "Tortilla Entera",
+    "precio": 39,
+    "puntos_venta": ["puntoA", "puntoB", "puntoC"]
+  }
+]

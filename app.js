@@ -2,20 +2,23 @@
    CAJA EVENTO — POS sencillo con persistencia en GitHub
    ========================================================= */
 
-// Temporal: hasta que la Fase 2 añada el selector de punto de venta en la
-// cabecera (con persistencia en localStorage), el punto activo queda fijo
-// en "puntoA" y solo se usa para calcular la ruta del fichero de ventas.
-let puntoActivo = "puntoA";
+const RUTA_PUNTOS_VENTA = "data/puntos_venta.json";
+const RUTA_ARTICULOS = "data/articulos.json";
+const RUTA_CIERRES = "data/cierres.json";
+const CONFIG_KEY = "caja_evento_config";
+const PUNTO_ACTIVO_KEY = "caja_evento_punto_activo";
+
 function rutaVentas(punto = puntoActivo) {
   return `data/ventas_${punto}.json`;
 }
-const RUTA_CIERRES = "data/cierres.json";
-const CONFIG_KEY = "caja_evento_config";
 
 let config = cargarConfig();
-let ticket = [];          // [{nombre, precio, cantidad}]
-let cacheVentas = null;   // {sha, data:[...]}
-let cacheCierres = null;  // {sha, data:[...]}
+let ticket = [];              // [{nombre, precio, cantidad}]
+let cacheVentas = null;       // {sha, data:[...]}
+let cacheCierres = null;      // {sha, data:[...]}
+let puntoActivo = null;       // id del punto activo, resuelto en el arranque
+let puntosVenta = [];         // [{id, nombre}], de data/puntos_venta.json
+let catalogoArticulos = [];   // [{nombre, precio, puntos_venta}], de data/articulos.json
 
 /* ---------------- Config ---------------- */
 
@@ -35,6 +38,74 @@ function guardarConfig(c) {
 function configCompleta() {
   return config.owner && config.repo && config.branch && config.token;
 }
+
+/* ---------------- Punto de venta activo ---------------- */
+
+// puntos_venta.json y articulos.json son catálogo estático servido por
+// GitHub Pages (no se escriben desde la app), así que se leen con fetch
+// normal en vez de con la API de GitHub usada para ventas/cierres.
+async function cargarDatosEstaticos() {
+  const [resPuntos, resArticulos] = await Promise.all([
+    fetch(RUTA_PUNTOS_VENTA, { cache: "no-store" }),
+    fetch(RUTA_ARTICULOS, { cache: "no-store" }),
+  ]);
+  puntosVenta = await resPuntos.json();
+  catalogoArticulos = await resArticulos.json();
+}
+
+function nombrePunto(id) {
+  return puntosVenta.find((p) => p.id === id)?.nombre || id;
+}
+
+function resolverPuntoActivoInicial() {
+  const guardado = localStorage.getItem(PUNTO_ACTIVO_KEY);
+  if (guardado && puntosVenta.some((p) => p.id === guardado)) return guardado;
+  return puntosVenta[0]?.id || null;
+}
+
+function renderSelectorPuntoVenta() {
+  const select = document.getElementById("select-punto-venta");
+  select.innerHTML = puntosVenta.map((p) => `<option value="${p.id}">${p.nombre}</option>`).join("");
+  select.value = puntoActivo;
+}
+
+function renderProductosGrid() {
+  const grid = document.getElementById("productos-grid");
+  const articulos = catalogoArticulos.filter((a) => a.puntos_venta.includes(puntoActivo));
+  grid.innerHTML = articulos
+    .map(
+      (a) => `
+      <button class="producto-btn" data-nombre="${a.nombre}" data-precio="${a.precio}">
+        <span class="p-nombre">${a.nombre}</span>
+        <span class="p-precio">${a.precio} CHF</span>
+      </button>`
+    )
+    .join("");
+}
+
+function cambiarPuntoActivo(nuevoPunto) {
+  if (nuevoPunto === puntoActivo) return;
+  puntoActivo = nuevoPunto;
+  localStorage.setItem(PUNTO_ACTIVO_KEY, puntoActivo);
+
+  // El catálogo cambia con el punto y un ticket a medias puede incluir
+  // artículos que no se venden en el nuevo punto: se vacía para evitar
+  // cobrar por error algo del punto anterior.
+  ticket = [];
+  renderTicket();
+  renderProductosGrid();
+
+  cacheVentas = null;
+  const pantallaActual = document.querySelector(".pantalla.activa")?.id;
+  if (pantallaActual === "pantalla-historial") refrescarHistorial();
+  if (pantallaActual === "pantalla-cierre") refrescarCierre();
+
+  mostrarToast(`Punto activo: ${nombrePunto(puntoActivo)}`);
+}
+
+document.getElementById("select-punto-venta").addEventListener("change", (e) => {
+  cambiarPuntoActivo(e.target.value);
+});
 
 /* ---------------- Utilidades base64 (UTF-8 safe) ---------------- */
 
@@ -360,18 +431,18 @@ function renderTicket() {
   }
 }
 
-document.querySelectorAll(".producto-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const nombre = btn.dataset.nombre;
-    const precio = Number(btn.dataset.precio);
-    const existente = ticket.find((i) => i.nombre === nombre);
-    if (existente) {
-      existente.cantidad += 1;
-    } else {
-      ticket.push({ nombre, precio, cantidad: 1 });
-    }
-    renderTicket();
-  });
+document.getElementById("productos-grid").addEventListener("click", (e) => {
+  const btn = e.target.closest(".producto-btn");
+  if (!btn) return;
+  const nombre = btn.dataset.nombre;
+  const precio = Number(btn.dataset.precio);
+  const existente = ticket.find((i) => i.nombre === nombre);
+  if (existente) {
+    existente.cantidad += 1;
+  } else {
+    ticket.push({ nombre, precio, cantidad: 1 });
+  }
+  renderTicket();
 });
 
 document.getElementById("ticket-lista").addEventListener("click", (e) => {
@@ -1005,8 +1076,19 @@ document.getElementById("btn-probar-conexion").addEventListener("click", async (
 
 /* ---------------- Inicio ---------------- */
 
-rellenarFormularioAjustes();
-renderTicket();
+(async function iniciar() {
+  try {
+    await cargarDatosEstaticos();
+    puntoActivo = resolverPuntoActivoInicial();
+    renderSelectorPuntoVenta();
+    renderProductosGrid();
+  } catch (e) {
+    console.error(e);
+    mostrarToast("No se pudo cargar el catálogo de artículos o los puntos de venta.", true);
+  }
+  rellenarFormularioAjustes();
+  renderTicket();
+})();
 
 if (!configCompleta()) {
   mostrarPantalla("ajustes");
