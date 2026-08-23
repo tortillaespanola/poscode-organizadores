@@ -1,0 +1,838 @@
+[
+  {
+    "id": "v_1787309438807_ht93v",
+    "fecha": "2026-08-21T10:50:38.818Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 57,
+    "metodo_pago": "Cash",
+    "anulada": false,
+    "cierre_id": "c_1787310196852"
+  },
+  {
+    "id": "v_1787309480668_yyxbi",
+    "fecha": "2026-08-21T10:51:20.669Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 51,
+    "metodo_pago": "Cash",
+    "anulada": true,
+    "cierre_id": "c_1787310196852"
+  },
+  {
+    "id": "v_1787310152776_cdkme",
+    "fecha": "2026-08-21T11:02:32.776Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 18,
+    "metodo_pago": "Cash",
+    "anulada": false,
+    "cierre_id": "c_1787310196852"
+  },
+  {
+    "id": "v_1787310158871_iv2ea",
+    "fecha": "2026-08-21T11:02:38.871Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 51,
+    "metodo_pago": "Twint",
+    "anulada": true,
+    "cierre_id": "c_1787310196852"
+  },
+  {
+    "id": "v_1787310187833_opp50",
+    "fecha": "2026-08-21T11:03:07.833Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      }
+    ],
+    "total": 78,
+    "metodo_pago": "Twint",
+    "anulada": false,
+    "cierre_id": "c_1787310196852"
+  },
+  {
+    "id": "v_1787311336464_4s569",
+    "fecha": "2026-08-21T11:22:16.464Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 51,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 51
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787311387401"
+  },
+  {
+    "id": "v_1787311347589_nv7lr",
+    "fecha": "2026-08-21T11:22:27.589Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 39,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 39
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787311387401"
+  },
+  {
+    "id": "v_1787312651438_qxz5z",
+    "fecha": "2026-08-21T11:44:11.438Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 12,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 12
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787312696542"
+  },
+  {
+    "id": "v_1787312683206_q1ldn",
+    "fecha": "2026-08-21T11:44:43.207Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 84,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 84
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787312696542"
+  },
+  {
+    "id": "v_1787317524197_522yt",
+    "fecha": "2026-08-21T13:05:24.197Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 12,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 12
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787317549668"
+  },
+  {
+    "id": "v_1787317886455_6ljnd",
+    "fecha": "2026-08-21T13:11:26.455Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      }
+    ],
+    "total": 12,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 12
+      }
+    ],
+    "anulada": true,
+    "cierre_id": "c_1787317970922"
+  },
+  {
+    "id": "v_1787317890102_s00qp",
+    "fecha": "2026-08-21T13:11:30.102Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      }
+    ],
+    "total": 12,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 12
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787317970922"
+  },
+  {
+    "id": "v_1787317905864_c7m1r",
+    "fecha": "2026-08-21T13:11:45.864Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 39,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 39
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787317970922"
+  },
+  {
+    "id": "v_1787317944876_h6om2",
+    "fecha": "2026-08-21T13:12:24.876Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 3
+      }
+    ],
+    "total": 18,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 18
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787317970922"
+  },
+  {
+    "id": "v_1787318378121_xi6ky",
+    "fecha": "2026-08-21T13:19:38.121Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 12,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 12
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787318396904"
+  },
+  {
+    "id": "v_1787321575128_hr192",
+    "fecha": "2026-08-21T14:12:55.129Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 45,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 45
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787322826796"
+  },
+  {
+    "id": "v_1787321621737_jpf0t",
+    "fecha": "2026-08-21T14:13:41.737Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 3
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      }
+    ],
+    "total": 30,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 30
+      }
+    ],
+    "anulada": true,
+    "cierre_id": "c_1787322826796"
+  },
+  {
+    "id": "v_1787322781833_ml3or",
+    "fecha": "2026-08-21T14:33:01.833Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      }
+    ],
+    "total": 90,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 90
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787322826796"
+  },
+  {
+    "id": "v_1787324366103_8v4lf",
+    "fecha": "2026-08-21T14:59:26.103Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      }
+    ],
+    "total": 18,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 18
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787324435714"
+  },
+  {
+    "id": "v_1787324389591_68rzn",
+    "fecha": "2026-08-21T14:59:49.591Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 4
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 63,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 50
+      },
+      {
+        "metodo": "Tarjeta",
+        "importe": 13
+      }
+    ],
+    "anulada": false,
+    "cierre_id": "c_1787324435714"
+  },
+  {
+    "id": "v_1787324398111_v5foz",
+    "fecha": "2026-08-21T14:59:58.111Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 3
+      }
+    ],
+    "total": 18,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 18
+      }
+    ],
+    "anulada": true,
+    "cierre_id": "c_1787324435714"
+  },
+  {
+    "id": "v_1787333008916_ln63y",
+    "fecha": "2026-08-21T17:23:28.917Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 3
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      }
+    ],
+    "total": 30,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 30
+      }
+    ],
+    "anulada": true,
+    "cierre_id": null
+  },
+  {
+    "id": "v_b713f99b-e7ab-4a10-92ec-79a06006c1ea",
+    "fecha": "2026-08-21T18:45:24.709Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 57,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 57
+      }
+    ],
+    "anulada": true,
+    "cierre_id": null
+  },
+  {
+    "id": "v_f5302f0f-e1b4-4928-b731-8f67f2c4a233",
+    "fecha": "2026-08-21T19:42:29.649Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 84,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 50
+      },
+      {
+        "metodo": "Twint",
+        "importe": 20
+      },
+      {
+        "metodo": "Tarjeta",
+        "importe": 14
+      }
+    ],
+    "anulada": true,
+    "cierre_id": null
+  },
+  {
+    "id": "v_789516dd-8df7-4e09-980f-15ae6b2f6d02",
+    "fecha": "2026-08-21T19:42:50.707Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 57,
+    "metodo_pago": "Tarjeta",
+    "pagos": [
+      {
+        "metodo": "Tarjeta",
+        "importe": 57
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  },
+  {
+    "id": "v_d7aa267b-b137-4201-8790-1acc7e81e6af",
+    "fecha": "2026-08-21T19:43:06.167Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      }
+    ],
+    "total": 51,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 50
+      },
+      {
+        "metodo": "Twint",
+        "importe": 1
+      }
+    ],
+    "anulada": true,
+    "cierre_id": null
+  },
+  {
+    "id": "v_2ea4e383-9bfa-4fcb-be02-22655f31a011",
+    "fecha": "2026-08-21T19:43:42.443Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 57,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 57
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  },
+  {
+    "id": "v_2ee2148c-6b02-4b9a-9487-c20e95dea188",
+    "fecha": "2026-08-21T20:09:37.176Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 84,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 84
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  },
+  {
+    "id": "v_e4fecb07-c1ca-4aa0-bfb7-34be8643238b",
+    "fecha": "2026-08-21T20:09:47.054Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 90,
+    "metodo_pago": "Tarjeta",
+    "pagos": [
+      {
+        "metodo": "Tarjeta",
+        "importe": 90
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  },
+  {
+    "id": "v_a32e35a6-8802-4c02-a520-f2eee6278b95",
+    "fecha": "2026-08-21T20:10:07.249Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      }
+    ],
+    "total": 90,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 90
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  },
+  {
+    "id": "v_1fb6ff5b-5b29-4cef-b11b-9a34d4ff7568",
+    "fecha": "2026-08-22T04:46:10.502Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 57,
+    "metodo_pago": "Twint",
+    "pagos": [
+      {
+        "metodo": "Twint",
+        "importe": 57
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  },
+  {
+    "id": "v_b1e5683a-6d7a-4d1c-bc73-9f68a963da3c",
+    "fecha": "2026-08-22T04:46:39.954Z",
+    "items": [
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 84,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 45
+      },
+      {
+        "metodo": "Twint",
+        "importe": 5
+      },
+      {
+        "metodo": "Tarjeta",
+        "importe": 34
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  }
+]

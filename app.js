@@ -2,7 +2,13 @@
    CAJA EVENTO — POS sencillo con persistencia en GitHub
    ========================================================= */
 
-const RUTA_VENTAS = "data/ventas.json";
+// Temporal: hasta que la Fase 2 añada el selector de punto de venta en la
+// cabecera (con persistencia en localStorage), el punto activo queda fijo
+// en "puntoA" y solo se usa para calcular la ruta del fichero de ventas.
+let puntoActivo = "puntoA";
+function rutaVentas(punto = puntoActivo) {
+  return `data/ventas_${punto}.json`;
+}
 const RUTA_CIERRES = "data/cierres.json";
 const CONFIG_KEY = "caja_evento_config";
 
@@ -232,7 +238,7 @@ const cacheCierresApi = {
 };
 
 async function asegurarCacheVentas() {
-  if (!cacheVentas) cacheVentas = await githubGetFile(RUTA_VENTAS);
+  if (!cacheVentas) cacheVentas = await githubGetFile(rutaVentas());
   return cacheVentas;
 }
 async function asegurarCacheCierres() {
@@ -415,7 +421,7 @@ async function registrarVenta(pagos, botonOrigen) {
   try {
     await asegurarCacheVentas();
     await guardarConReintento(
-      RUTA_VENTAS,
+      rutaVentas(),
       (data) => {
         // Si un intento anterior sí llegó a guardarse en GitHub (pero el
         // cliente no recibió la respuesta a tiempo y reintentó), no la
@@ -677,7 +683,7 @@ async function refrescarHistorial() {
   const lista = document.getElementById("historial-lista");
   setCargando(true);
   try {
-    cacheVentas = await githubGetFile(RUTA_VENTAS);
+    cacheVentas = await githubGetFile(rutaVentas());
     cacheCierres = await githubGetFile(RUTA_CIERRES);
 
     lista.innerHTML = "";
@@ -728,7 +734,7 @@ document.getElementById("historial-lista").addEventListener("click", async (e) =
   try {
     await asegurarCacheVentas();
     await guardarConReintento(
-      RUTA_VENTAS,
+      rutaVentas(),
       (data) => {
         const v = data.find((x) => x.id === id);
         if (v) v.anulada = true;
@@ -759,7 +765,7 @@ async function refrescarCierre() {
   if (!configCompleta()) return;
   setCargando(true);
   try {
-    cacheVentas = await githubGetFile(RUTA_VENTAS);
+    cacheVentas = await githubGetFile(rutaVentas());
     cacheCierres = await githubGetFile(RUTA_CIERRES);
 
     const pendientes = ventasPendientes(cacheVentas.data);
@@ -845,7 +851,7 @@ document.getElementById("btn-cerrar-caja").addEventListener("click", async () =>
     );
 
     await guardarConReintento(
-      RUTA_VENTAS,
+      rutaVentas(),
       (data) => {
         data.forEach((v) => {
           if (cierre.venta_ids.includes(v.id)) v.cierre_id = cierre.id;
