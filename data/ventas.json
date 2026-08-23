@@ -523,7 +523,7 @@
       }
     ],
     "anulada": true,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_b713f99b-e7ab-4a10-92ec-79a06006c1ea",
@@ -554,7 +554,7 @@
       }
     ],
     "anulada": true,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_f5302f0f-e1b4-4928-b731-8f67f2c4a233",
@@ -588,7 +588,7 @@
       }
     ],
     "anulada": true,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_789516dd-8df7-4e09-980f-15ae6b2f6d02",
@@ -619,7 +619,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_d7aa267b-b137-4201-8790-1acc7e81e6af",
@@ -649,7 +649,7 @@
       }
     ],
     "anulada": true,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_2ea4e383-9bfa-4fcb-be02-22655f31a011",
@@ -680,7 +680,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_2ee2148c-6b02-4b9a-9487-c20e95dea188",
@@ -706,7 +706,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_e4fecb07-c1ca-4aa0-bfb7-34be8643238b",
@@ -737,7 +737,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_a32e35a6-8802-4c02-a520-f2eee6278b95",
@@ -768,7 +768,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_1fb6ff5b-5b29-4cef-b11b-9a34d4ff7568",
@@ -799,7 +799,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   },
   {
     "id": "v_b1e5683a-6d7a-4d1c-bc73-9f68a963da3c",
@@ -833,6 +833,6 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_b2a07dcc-f63c-4753-85d0-6f303b96aef1"
   }
 ]
