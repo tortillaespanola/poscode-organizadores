@@ -1,5 +1,5 @@
 [
-  { "id": "puntoA", "nombre": "Punto A" },
-  { "id": "puntoB", "nombre": "Punto B" },
-  { "id": "puntoC", "nombre": "Punto C" }
+  { "id": "caseta", "nombre": "Caseta" },
+  { "id": "estrella", "nombre": "Estrella" },
+  { "id": "asociacion", "nombre": "Asociación" }
 ]
