@@ -12,11 +12,7 @@ import {
   githubGetFile,
   guardarConReintento,
   validarConexion,
-  pagosDeVenta,
-  totalesPorMetodo,
   resumenPago,
-  ventasPendientes,
-  construirCierre,
 } from "../js/api-github.js";
 
 // Rutas de datos estáticos (puntos de venta y catálogo): relativas a esta
@@ -91,7 +87,6 @@ function cambiarPuntoActivo(nuevoPunto) {
   cacheVentas = null;
   const pantallaActual = document.querySelector(".pantalla.activa")?.id;
   if (pantallaActual === "pantalla-historial") refrescarHistorial();
-  if (pantallaActual === "pantalla-cierre") refrescarCierre();
 
   mostrarToast(`Punto activo: ${nombrePunto(puntoActivo)}`);
 }
@@ -104,23 +99,15 @@ const cacheVentasApi = {
   get: () => cacheVentas,
   set: (v) => (cacheVentas = v),
 };
-const cacheCierresApi = {
-  get: () => cacheCierres,
-  set: (v) => (cacheCierres = v),
-};
 
 async function asegurarCacheVentas() {
   if (!cacheVentas) cacheVentas = await githubGetFile(rutaVentas(puntoActivo));
   return cacheVentas;
 }
-async function asegurarCacheCierres() {
-  if (!cacheCierres) cacheCierres = await githubGetFile(RUTA_CIERRES);
-  return cacheCierres;
-}
 
 /* ---------------- UI: navegación de pantallas ---------------- */
 
-const pantallas = ["venta", "historial", "cierre", "ajustes"];
+const pantallas = ["venta", "historial", "ajustes"];
 
 function mostrarPantalla(nombre) {
   pantallas.forEach((p) => {
@@ -131,7 +118,6 @@ function mostrarPantalla(nombre) {
   });
   document.getElementById("pago-fija").classList.toggle("activa", nombre === "venta");
   if (nombre === "historial") refrescarHistorial();
-  if (nombre === "cierre") refrescarCierre();
 }
 
 document.querySelectorAll(".tab-btn").forEach((btn) => {
@@ -596,178 +582,6 @@ document.getElementById("historial-lista").addEventListener("click", async (e) =
 });
 
 document.getElementById("btn-refrescar-historial").addEventListener("click", refrescarHistorial);
-
-/* ---------------- Pantalla: Cierre de caja ---------------- */
-
-async function refrescarCierre() {
-  if (!configCompleta()) return;
-  setCargando(true);
-  try {
-    cacheVentas = await githubGetFile(rutaVentas(puntoActivo));
-    cacheCierres = await githubGetFile(RUTA_CIERRES);
-
-    const pendientes = ventasPendientes(cacheVentas.data);
-    const { cash: totalCash, twint: totalTwint, tarjeta: totalTarjeta } = totalesPorMetodo(pendientes);
-
-    document.getElementById("cierre-num-ventas").textContent = pendientes.length;
-    document.getElementById("cierre-total-cash").textContent = `${totalCash} CHF`;
-    document.getElementById("cierre-total-twint").textContent = `${totalTwint} CHF`;
-    document.getElementById("cierre-total-tarjeta").textContent = `${totalTarjeta} CHF`;
-    document.getElementById("cierre-total").textContent = `${totalCash + totalTwint + totalTarjeta} CHF`;
-    document.getElementById("btn-cerrar-caja").disabled = pendientes.length === 0;
-
-    const lista = document.getElementById("cierres-lista");
-    const cierresOrdenados = [...cacheCierres.data].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-    lista.innerHTML = "";
-    if (cierresOrdenados.length === 0) {
-      lista.innerHTML = `<li class="vacio-nota">Todavía no hay cierres</li>`;
-    } else {
-      cierresOrdenados.forEach((c) => {
-        const li = document.createElement("li");
-        li.className = "historial-item";
-        li.innerHTML = `
-          <div class="historial-item-top">
-            <span>${formatoHora(c.fecha)}</span>
-            <span>${c.num_ventas} ventas</span>
-          </div>
-          <div class="historial-item-items">Cash ${c.total_cash} CHF · Twint ${c.total_twint} CHF · Tarjeta ${c.total_tarjeta || 0} CHF</div>
-          <div class="historial-item-bottom">
-            <span class="historial-item-total">${c.total} CHF</span>
-            <button class="btn-exportar-csv" data-id="${c.id}">Exportar CSV</button>
-          </div>
-        `;
-        lista.appendChild(li);
-      });
-    }
-  } catch (e) {
-    console.error(e);
-    mostrarToast("No se pudo cargar el cierre.", true);
-  } finally {
-    setCargando(false);
-  }
-}
-
-document.getElementById("btn-refrescar-cierre").addEventListener("click", refrescarCierre);
-
-document.getElementById("btn-cerrar-caja").addEventListener("click", async () => {
-  await asegurarCacheVentas();
-  const pendientes = ventasPendientes(cacheVentas.data);
-  if (pendientes.length === 0) return;
-
-  const { cash, twint, tarjeta } = totalesPorMetodo(pendientes);
-  const total = cash + twint + tarjeta;
-
-  if (!confirm(`¿Cerrar caja con ${pendientes.length} ventas (${total} CHF)? Esto pondrá el contador a cero.`)) return;
-
-  setCargando(true);
-  try {
-    const cierre = construirCierre(puntoActivo, cacheVentas.data);
-
-    await asegurarCacheCierres();
-    await guardarConReintento(
-      RUTA_CIERRES,
-      (data) => {
-        if (data.some((c) => c.id === cierre.id)) return null;
-        data.push(cierre);
-        return data;
-      },
-      `Cierre de caja ${cierre.id} (${total} CHF)`,
-      cacheCierresApi
-    );
-
-    await guardarConReintento(
-      rutaVentas(puntoActivo),
-      (data) => {
-        data.forEach((v) => {
-          if (cierre.venta_ids.includes(v.id)) v.cierre_id = cierre.id;
-        });
-        return data;
-      },
-      `Marcar ventas del cierre ${cierre.id}`,
-      cacheVentasApi
-    );
-
-    mostrarToast("Caja cerrada y puesta a cero");
-    refrescarCierre();
-  } catch (e) {
-    console.error(e);
-    mostrarToast(`No se pudo cerrar la caja: ${e.message}`, true);
-  } finally {
-    setCargando(false);
-  }
-});
-
-/* ---------------- Exportar CSV de un cierre ---------------- */
-
-function csvEscape(valor) {
-  const s = String(valor === undefined || valor === null ? "" : valor);
-  if (/[;"\n]/.test(s)) {
-    return `"${s.replace(/"/g, '""')}"`;
-  }
-  return s;
-}
-
-document.getElementById("cierres-lista").addEventListener("click", async (e) => {
-  const btn = e.target.closest(".btn-exportar-csv");
-  if (!btn) return;
-  await exportarCierreCSV(btn.dataset.id);
-});
-
-async function exportarCierreCSV(cierreId) {
-  setCargando(true);
-  try {
-    await asegurarCacheCierres();
-    const cierre = cacheCierres.data.find((c) => c.id === cierreId);
-    if (!cierre) throw new Error("Cierre no encontrado en la caché local.");
-
-    await asegurarCacheVentas();
-    const ventasDelCierre = cierre.venta_ids
-      .map((id) => cacheVentas.data.find((v) => v.id === id))
-      .filter(Boolean);
-
-    const filas = [["Fecha", "Hora", "Artículos", "Total", "Cash", "Twint", "Tarjeta", "Anulada"]];
-    ventasDelCierre.forEach((v) => {
-      const d = new Date(v.fecha);
-      const fecha = d.toLocaleDateString("es-ES");
-      const hora = d.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
-      const pagos = pagosDeVenta(v);
-      const cash = pagos.filter((p) => p.metodo === "Cash").reduce((s, p) => s + p.importe, 0);
-      const twint = pagos.filter((p) => p.metodo === "Twint").reduce((s, p) => s + p.importe, 0);
-      const tarjeta = pagos.filter((p) => p.metodo === "Tarjeta").reduce((s, p) => s + p.importe, 0);
-      filas.push([fecha, hora, resumenItems(v.items), v.total, cash, twint, tarjeta, v.anulada ? "Sí" : "No"]);
-    });
-
-    filas.push([]);
-    filas.push([
-      "TOTALES",
-      "",
-      `${cierre.num_ventas} ventas`,
-      cierre.total,
-      cierre.total_cash,
-      cierre.total_twint,
-      cierre.total_tarjeta || 0,
-      "",
-    ]);
-
-    const csv = filas.map((fila) => fila.map(csvEscape).join(";")).join("\r\n");
-    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
-    const nombreArchivo = `cierre_${cierre.fecha.slice(0, 10)}_${cierre.id}.csv`;
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = nombreArchivo;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  } catch (e) {
-    console.error(e);
-    mostrarToast(`No se pudo exportar el CSV: ${e.message}`, true);
-  } finally {
-    setCargando(false);
-  }
-}
 
 /* ---------------- Pantalla: Ajustes ---------------- */
 
