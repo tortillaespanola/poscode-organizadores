@@ -20,6 +20,11 @@
     "puntos_venta": ["carpa_estrella"]
   },
   {
+    "nombre": "Copa",
+    "precio": 10,
+    "puntos_venta": ["carpa_estrella"]
+  },
+  {
     "nombre": "Depósito de vaso",
     "precio": 2,
     "puntos_venta": ["carpa_estrella", "depositos"]
