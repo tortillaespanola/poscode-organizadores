@@ -1,6 +1,6 @@
 [
-  { "id": "caseta", "nombre": "Caseta" },
-  { "id": "estrella", "nombre": "Estrella" },
+  { "id": "carpa_estrella", "nombre": "Carpa Estrella" },
+  { "id": "chalet", "nombre": "Chalet" },
   { "id": "asociacion", "nombre": "Asociación" },
-  { "id": "depo", "nombre": "Depo" }
+  { "id": "depositos", "nombre": "Depósitos" }
 ]

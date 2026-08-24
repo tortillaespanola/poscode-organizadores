@@ -1,67 +1,97 @@
 [
   {
-    "nombre": "Estrella SIN",
-    "precio": 6,
-    "puntos_venta": ["caseta"]
-  },
-  {
-    "nombre": "Café",
-    "precio": 3,
-    "puntos_venta": ["caseta"]
-  },
-  {
-    "nombre": "Cortado",
-    "precio": 3,
-    "puntos_venta": ["caseta"]
-  },
-  {
-    "nombre": "Refresco",
+    "nombre": "Estrella Galicia",
     "precio": 5,
-    "puntos_venta": ["caseta"]
+    "puntos_venta": ["carpa_estrella"]
   },
   {
-    "nombre": "Agua",
-    "precio": 4,
-    "puntos_venta": ["caseta"]
-  },
-  {
-    "nombre": "Cerveza",
-    "precio": 6,
-    "puntos_venta": ["estrella"]
-  },
-  {
-    "nombre": "Caña",
-    "precio": 4,
-    "puntos_venta": ["estrella"]
+    "nombre": "Cerveza 1906",
+    "precio": 5,
+    "puntos_venta": ["carpa_estrella"]
   },
   {
     "nombre": "Sangría",
-    "precio": 6,
-    "puntos_venta": ["estrella"]
-  },
-  {
-    "nombre": "Camiseta Adulto",
-    "precio": 10,
-    "puntos_venta": ["asociacion"]
-  },
-  {
-    "nombre": "Camiseta Niño",
-    "precio": 7,
-    "puntos_venta": ["asociacion"]
-  },
-  {
-    "nombre": "Pulsera",
     "precio": 4,
+    "puntos_venta": ["carpa_estrella"]
+  },
+  {
+    "nombre": "Cerveza sin alcohol",
+    "precio": 3,
+    "puntos_venta": ["carpa_estrella"]
+  },
+  {
+    "nombre": "Depósito de vaso",
+    "precio": 2,
+    "puntos_venta": ["carpa_estrella", "depositos"]
+  },
+  {
+    "nombre": "Depósito de copa",
+    "precio": 2,
+    "puntos_venta": ["carpa_estrella", "depositos"]
+  },
+  {
+    "nombre": "Refresco",
+    "precio": 4,
+    "puntos_venta": ["chalet"]
+  },
+  {
+    "nombre": "Agua",
+    "precio": 3,
+    "puntos_venta": ["chalet"]
+  },
+  {
+    "nombre": "Zumo",
+    "precio": 3,
+    "puntos_venta": ["chalet"]
+  },
+  {
+    "nombre": "Café expreso",
+    "precio": 3,
+    "puntos_venta": ["chalet"]
+  },
+  {
+    "nombre": "Café con leche",
+    "precio": 3.5,
+    "puntos_venta": ["chalet"]
+  },
+  {
+    "nombre": "Helado",
+    "precio": 1,
+    "puntos_venta": ["chalet"]
+  },
+  {
+    "nombre": "Camiseta público (adulto)",
+    "precio": 1,
     "puntos_venta": ["asociacion"]
   },
   {
-    "nombre": "Vaso",
-    "precio": 2,
-    "puntos_venta": ["depo"]
+    "nombre": "Camiseta público infantil",
+    "precio": 1,
+    "puntos_venta": ["asociacion"]
+  },
+  {
+    "nombre": "Pulsera \"La Española\" (rifa)",
+    "precio": 1,
+    "puntos_venta": ["asociacion"]
+  },
+  {
+    "nombre": "Cuota de socio individual",
+    "precio": 30,
+    "puntos_venta": ["asociacion"]
+  },
+  {
+    "nombre": "Cuota de socio familiar",
+    "precio": 50,
+    "puntos_venta": ["asociacion"]
   },
   {
     "nombre": "Devolución Vaso",
     "precio": -2,
-    "puntos_venta": ["depo"]
+    "puntos_venta": ["depositos"]
+  },
+  {
+    "nombre": "Devolución Copa",
+    "precio": -2,
+    "puntos_venta": ["depositos"]
   }
 ]
