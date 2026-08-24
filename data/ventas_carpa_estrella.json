@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "v_ee8ce59c-926c-40f3-9dac-c6ef1c0e77fc",
+    "fecha": "2026-08-24T20:48:36.985Z",
+    "items": [
+      {
+        "nombre": "Estrella Galicia",
+        "precio": 5,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Cerveza 1906",
+        "precio": 5,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Sangría",
+        "precio": 4,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Helado reduccion",
+        "precio": 3,
+        "cantidad": 1
+      }
+    ],
+    "total": 17,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 17
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  }
+]
