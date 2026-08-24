@@ -8,6 +8,7 @@
   --danger:#c0392b;
   --tabbar-h:45px;
   --pago-fija-h:132px;
+  --topbar-h:60px;
 }
 
 *{box-sizing:border-box;}
@@ -39,7 +40,8 @@ input{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 18px;
+  height:var(--topbar-h);
+  padding:0 18px;
   background:var(--bg);
   border-bottom:2px solid var(--ink);
   position:sticky;
@@ -97,11 +99,16 @@ input{
 .pantalla{display:none;}
 .pantalla.activa{display:block;}
 
-/* La pantalla de Venta necesita hueco fijo abajo para la tabbar + la
-   barra de pago fija que flota por encima; el resto de pantallas solo
-   necesitan hueco para la tabbar. */
+/* La pantalla de Venta ocupa exactamente el alto visible libre (viewport
+   menos topbar, barra de pago fija y tabbar) y no se desplaza como
+   página: solo el catálogo de productos hace scroll interno, así que el
+   ticket y el total quedan siempre a la vista mientras se va apuntando,
+   sin scroll. El resto de pantallas sigue el scroll normal de página. */
 #pantalla-venta.activa{
-  padding-bottom:calc(var(--tabbar-h) + var(--pago-fija-h) + 8px);
+  display:flex;
+  flex-direction:column;
+  height:calc(100dvh - var(--topbar-h) - var(--pago-fija-h) - var(--tabbar-h) - 28px);
+  overflow:hidden;
 }
 #pantalla-historial.activa,
 #pantalla-cierre.activa,
@@ -125,11 +132,19 @@ input{
 }
 
 /* ---------- Productos ---------- */
+/* flex:1 + min-height:0 + overflow-y:auto: es la única zona de la
+   pantalla de Venta que hace scroll (el catálogo puede ser largo), para
+   que el botón de artículo libre y el ticket con el total de abajo
+   queden siempre visibles sin desplazar la página. */
 .productos-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
+  align-content:start;
   gap:8px;
   margin-bottom:8px;
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
 }
 .producto-btn{
   background:var(--bg);
@@ -165,11 +180,13 @@ input{
 }
 
 .btn-articulo-libre{
+  flex:0 0 auto;
   margin-bottom:8px;
 }
 
 /* ---------- Ticket ---------- */
 .ticket{
+  flex:0 0 auto;
   background:var(--bg);
   border:1px solid var(--line);
   padding:12px;
@@ -793,4 +810,7 @@ input{
 @media (min-width:600px){
   #app{padding-top:20px;}
   .productos-grid{grid-template-columns:1fr 1fr 1fr;}
+  #pantalla-venta.activa{
+    height:calc(100dvh - var(--topbar-h) - var(--pago-fija-h) - var(--tabbar-h) - 36px);
+  }
 }
