@@ -7,7 +7,6 @@
   --line:#e8e8e8;
   --danger:#c0392b;
   --tabbar-h:45px;
-  --pago-fija-h:132px;
   --topbar-h:60px;
 }
 
@@ -100,14 +99,17 @@ input{
 .pantalla.activa{display:block;}
 
 /* La pantalla de Venta ocupa exactamente el alto visible libre (viewport
-   menos topbar, barra de pago fija y tabbar) y no se desplaza como
-   página: solo el catálogo de productos hace scroll interno, así que el
-   ticket y el total quedan siempre a la vista mientras se va apuntando,
-   sin scroll. El resto de pantallas sigue el scroll normal de página. */
+   menos topbar y tabbar, los dos únicos elementos que quedan fuera de
+   ella) y no se desplaza como página: es una columna flex donde
+   productos-grid y el ticket (más abajo) hacen scroll interno cada uno
+   por su lado, mientras que #pago-fija (total + método de pago), al ser
+   un hijo flex normal con flex-shrink:0 al final de la columna, queda
+   siempre visible sin depender de calcular su altura a ciegas. El resto
+   de pantallas sigue el scroll normal de página. */
 #pantalla-venta.activa{
   display:flex;
   flex-direction:column;
-  height:calc(100dvh - var(--topbar-h) - var(--pago-fija-h) - var(--tabbar-h) - 28px);
+  height:calc(100dvh - var(--topbar-h) - var(--tabbar-h) - 28px);
   overflow:hidden;
 }
 #pantalla-historial.activa,
@@ -283,9 +285,7 @@ input{
   display:flex;
   justify-content:space-between;
   align-items:baseline;
-  margin-top:8px;
-  padding-top:8px;
-  border-top:2px solid var(--ink);
+  margin-bottom:10px;
   font-size:13px;
   font-weight:700;
   text-transform:uppercase;
@@ -300,17 +300,14 @@ input{
 }
 
 /* ---------- Barra de pago fija ---------- */
+/* Ya no es position:fixed: vive dentro de #pantalla-venta como último
+   hijo de su columna flex (flex-shrink:0), así que queda anclada abajo
+   sin necesidad de calcular su altura desde fuera. */
 .pago-fija{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:var(--tabbar-h);
-  max-width:520px;
-  margin:0 auto;
+  flex-shrink:0;
   background:var(--bg);
   border-top:2px solid var(--ink);
   padding:10px 16px calc(6px + env(safe-area-inset-bottom));
-  z-index:9;
   display:none;
 }
 .pago-fija.activa{display:block;}
@@ -806,6 +803,6 @@ input{
   #app{padding-top:20px;}
   .productos-grid{grid-template-columns:1fr 1fr 1fr;}
   #pantalla-venta.activa{
-    height:calc(100dvh - var(--topbar-h) - var(--pago-fija-h) - var(--tabbar-h) - 36px);
+    height:calc(100dvh - var(--topbar-h) - var(--tabbar-h) - 36px);
   }
 }

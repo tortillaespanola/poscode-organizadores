@@ -44,10 +44,23 @@
       <ul id="ticket-lista" class="ticket-lista">
         <li class="ticket-vacio">Toca un artículo para empezar</li>
       </ul>
+    </div>
+
+    <!-- Pie fijo de la pantalla de Venta: total + método de pago, siempre
+         visible sin scroll (ver #pantalla-venta.activa en style.css). Solo
+         se muestra en esta pantalla; app.js alterna la clase "activa". -->
+    <div id="pago-fija" class="pago-fija">
       <div class="ticket-total">
         <span>Total</span>
         <span id="ticket-total-valor">0 CHF</span>
       </div>
+      <p class="eyebrow-divider">── MÉTODO DE PAGO ──</p>
+      <div class="pago-botones">
+        <button id="btn-pago-cash" class="pago-btn" disabled>Cash</button>
+        <button id="btn-pago-twint" class="pago-btn" disabled>Twint</button>
+        <button id="btn-pago-tarjeta" class="pago-btn" disabled>Tarjeta</button>
+      </div>
+      <button id="btn-pago-dividir" class="link-btn link-btn--centrado" disabled>Dividir pago</button>
     </div>
   </section>
 
@@ -90,17 +103,6 @@
   </section>
 
 </main>
-
-<!-- Barra de pago fija (solo visible en pantalla Venta) -->
-<div id="pago-fija" class="pago-fija">
-  <p class="eyebrow-divider">── MÉTODO DE PAGO ──</p>
-  <div class="pago-botones">
-    <button id="btn-pago-cash" class="pago-btn" disabled>Cash</button>
-    <button id="btn-pago-twint" class="pago-btn" disabled>Twint</button>
-    <button id="btn-pago-tarjeta" class="pago-btn" disabled>Tarjeta</button>
-  </div>
-  <button id="btn-pago-dividir" class="link-btn link-btn--centrado" disabled>Dividir pago</button>
-</div>
 
 <nav class="tabbar">
   <button class="tab-btn activa" data-pantalla="venta">Venta</button>
