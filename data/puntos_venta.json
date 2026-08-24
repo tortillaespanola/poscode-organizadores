@@ -1,5 +1,6 @@
 [
   { "id": "caseta", "nombre": "Caseta" },
   { "id": "estrella", "nombre": "Estrella" },
-  { "id": "asociacion", "nombre": "Asociación" }
+  { "id": "asociacion", "nombre": "Asociación" },
+  { "id": "depo", "nombre": "Depo" }
 ]

@@ -53,5 +53,15 @@
     "nombre": "Pulsera",
     "precio": 4,
     "puntos_venta": ["asociacion"]
+  },
+  {
+    "nombre": "Vaso",
+    "precio": 2,
+    "puntos_venta": ["depo"]
+  },
+  {
+    "nombre": "Devolución Vaso",
+    "precio": -2,
+    "puntos_venta": ["depo"]
   }
 ]
