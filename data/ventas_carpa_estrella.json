@@ -34,5 +34,36 @@
     ],
     "anulada": false,
     "cierre_id": null
+  },
+  {
+    "id": "v_93e64ac5-ae8c-4442-9add-dd6e6ed7b4ec",
+    "fecha": "2026-08-24T20:49:38.297Z",
+    "items": [
+      {
+        "nombre": "Cerveza sin alcohol",
+        "precio": 3,
+        "cantidad": 3
+      },
+      {
+        "nombre": "Cerveza 1906",
+        "precio": 5,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Depósito de copa",
+        "precio": 2,
+        "cantidad": 1
+      }
+    ],
+    "total": 16,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 16
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
   }
 ]
