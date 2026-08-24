@@ -35,6 +35,7 @@
   <!-- PANTALLA: VENTA -->
   <section id="pantalla-venta" class="pantalla activa">
     <div class="productos-grid" id="productos-grid"></div>
+    <button id="btn-articulo-libre" class="btn-secundario btn-articulo-libre">+ Artículo libre</button>
 
     <div class="ticket">
       <div class="ticket-header">
@@ -167,6 +168,26 @@
     <div class="dividir-acciones">
       <button id="btn-dividir-cancelar" class="btn-secundario">Cancelar</button>
       <button id="btn-dividir-confirmar" class="btn-principal" disabled>Confirmar pago dividido</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: artículo libre (precio y texto libres, para imprevistos) -->
+<div id="modal-libre" class="modal-backdrop oculto">
+  <div class="modal-cobro">
+    <p class="eyebrow">Artículo libre</p>
+    <label class="campo-cobro">
+      <span>Descripción</span>
+      <input id="input-libre-nombre" type="text" placeholder="p. ej. Imprevisto, reposición..." maxlength="60" autocomplete="off">
+    </label>
+    <label class="campo-cobro">
+      <span>Precio (CHF)</span>
+      <input id="input-libre-precio" type="number" step="0.01" inputmode="decimal" placeholder="0.00">
+    </label>
+    <p id="libre-estado" class="dividir-estado"></p>
+    <div class="dividir-acciones">
+      <button id="btn-libre-cancelar" class="btn-secundario">Cancelar</button>
+      <button id="btn-libre-confirmar" class="btn-principal">Añadir al ticket</button>
     </div>
   </div>
 </div>

@@ -164,6 +164,10 @@ input{
   opacity:0.6;
 }
 
+.btn-articulo-libre{
+  margin-bottom:8px;
+}
+
 /* ---------- Ticket ---------- */
 .ticket{
   background:var(--bg);

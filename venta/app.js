@@ -218,6 +218,45 @@ document.getElementById("btn-vaciar-ticket").addEventListener("click", () => {
   renderTicket();
 });
 
+/* ---------------- Artículo libre (precio y texto libres) ---------------- */
+
+function ocultarModalLibre() {
+  document.getElementById("modal-libre").classList.add("oculto");
+}
+
+function mostrarModalLibre() {
+  document.getElementById("input-libre-nombre").value = "";
+  document.getElementById("input-libre-precio").value = "";
+  document.getElementById("libre-estado").textContent = "";
+  document.getElementById("libre-estado").className = "dividir-estado";
+  document.getElementById("modal-libre").classList.remove("oculto");
+  document.getElementById("input-libre-nombre").focus();
+}
+
+document.getElementById("btn-articulo-libre").addEventListener("click", mostrarModalLibre);
+document.getElementById("btn-libre-cancelar").addEventListener("click", ocultarModalLibre);
+
+document.getElementById("btn-libre-confirmar").addEventListener("click", () => {
+  const nombre = document.getElementById("input-libre-nombre").value.trim();
+  const precio = Number(document.getElementById("input-libre-precio").value);
+  const estado = document.getElementById("libre-estado");
+
+  if (!nombre) {
+    estado.textContent = "Escribe una descripción.";
+    estado.className = "dividir-estado error";
+    return;
+  }
+  if (!Number.isFinite(precio) || precio === 0) {
+    estado.textContent = "Escribe un precio distinto de cero.";
+    estado.className = "dividir-estado error";
+    return;
+  }
+
+  ticket.push({ nombre, precio, cantidad: 1 });
+  renderTicket();
+  ocultarModalLibre();
+});
+
 async function registrarVenta(pagos, botonOrigen) {
   if (!configCompleta()) {
     mostrarToast("Configura primero la conexión en Ajustes", true);
