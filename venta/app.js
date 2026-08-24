@@ -61,15 +61,21 @@ function renderSelectorPuntoVenta() {
 function renderProductosGrid() {
   const grid = document.getElementById("productos-grid");
   const articulos = catalogoArticulos.filter((a) => a.puntos_venta.includes(puntoActivo));
-  grid.innerHTML = articulos
-    .map(
-      (a) => `
+  grid.innerHTML =
+    articulos
+      .map(
+        (a) => `
       <button class="producto-btn" data-nombre="${a.nombre}" data-precio="${a.precio}">
         <span class="p-nombre">${a.nombre}</span>
         <span class="p-precio">${a.precio} CHF</span>
       </button>`
-    )
-    .join("");
+      )
+      .join("") +
+    `
+      <button id="btn-articulo-libre" class="producto-btn">
+        <span class="p-nombre">+ Artículo libre</span>
+        <span class="p-precio">Precio libre</span>
+      </button>`;
 }
 
 function cambiarPuntoActivo(nuevoPunto) {
@@ -189,6 +195,10 @@ function renderTicket() {
 }
 
 document.getElementById("productos-grid").addEventListener("click", (e) => {
+  if (e.target.closest("#btn-articulo-libre")) {
+    mostrarModalLibre();
+    return;
+  }
   const btn = e.target.closest(".producto-btn");
   if (!btn) return;
   const nombre = btn.dataset.nombre;
@@ -233,7 +243,6 @@ function mostrarModalLibre() {
   document.getElementById("input-libre-nombre").focus();
 }
 
-document.getElementById("btn-articulo-libre").addEventListener("click", mostrarModalLibre);
 document.getElementById("btn-libre-cancelar").addEventListener("click", ocultarModalLibre);
 
 document.getElementById("btn-libre-confirmar").addEventListener("click", () => {

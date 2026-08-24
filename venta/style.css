@@ -134,8 +134,8 @@ input{
 /* ---------- Productos ---------- */
 /* flex:1 + min-height:0 + overflow-y:auto: es la única zona de la
    pantalla de Venta que hace scroll (el catálogo puede ser largo), para
-   que el botón de artículo libre y el ticket con el total de abajo
-   queden siempre visibles sin desplazar la página. */
+   que el ticket con el total de abajo quede siempre visible sin
+   desplazar la página. */
 .productos-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -177,11 +177,6 @@ input{
   color:var(--ink);
   font-weight:700;
   opacity:0.6;
-}
-
-.btn-articulo-libre{
-  flex:0 0 auto;
-  margin-bottom:8px;
 }
 
 /* ---------- Ticket ---------- */
