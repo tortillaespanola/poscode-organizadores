@@ -65,5 +65,36 @@
     ],
     "anulada": false,
     "cierre_id": null
+  },
+  {
+    "id": "v_5048f57a-d7fc-4a19-a59d-2f4049cc84d9",
+    "fecha": "2026-08-24T20:49:56.425Z",
+    "items": [
+      {
+        "nombre": "Cerveza sin alcohol",
+        "precio": 3,
+        "cantidad": 3
+      },
+      {
+        "nombre": "Depósito de vaso",
+        "precio": 2,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Estrella Galicia",
+        "precio": 5,
+        "cantidad": 1
+      }
+    ],
+    "total": 16,
+    "metodo_pago": "Cash",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 16
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
   }
 ]
