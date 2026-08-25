@@ -1,0 +1,10 @@
+[
+  { "nombre": "Tinto Copa", "precio": 6 },
+  { "nombre": "Tinto Botella", "precio": 28 },
+  { "nombre": "Rosado Copa", "precio": 6 },
+  { "nombre": "Rosado Botella", "precio": 28 },
+  { "nombre": "Blanco Copa", "precio": 6 },
+  { "nombre": "Blanco Botella", "precio": 25 },
+  { "nombre": "Espumoso Copa", "precio": 6 },
+  { "nombre": "Espumoso Botella", "precio": 25 }
+]

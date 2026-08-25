@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Caja · Juan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <span class="caja-titulo">CAJA · JUAN</span>
+  <button id="btn-ajustes" class="icon-btn" aria-label="Ajustes">[ AJUSTES ]</button>
+</header>
+
+<main id="app">
+
+  <!-- PANTALLA: CIERRE -->
+  <section id="pantalla-cierre" class="pantalla activa">
+    <div class="seccion-header">
+      <h2>Cierre de caja — Juan</h2>
+      <button id="btn-refrescar-todo" class="link-btn">Actualizar</button>
+    </div>
+    <div id="puntos-cierre-lista"></div>
+  </section>
+
+  <!-- PANTALLA: AJUSTES -->
+  <section id="pantalla-ajustes" class="pantalla">
+    <div class="seccion-header">
+      <h2>Ajustes de conexión</h2>
+    </div>
+    <p class="ajustes-nota">Estos datos se guardan solo en este dispositivo. El token nunca se sube al repositorio.</p>
+
+    <label class="campo">
+      <span>Usuario u organización de GitHub</span>
+      <input id="input-owner" type="text" placeholder="p. ej. hsblas" autocomplete="off">
+    </label>
+    <label class="campo">
+      <span>Repositorio</span>
+      <input id="input-repo" type="text" placeholder="p. ej. poscode-organizadores" autocomplete="off">
+    </label>
+    <label class="campo">
+      <span>Rama</span>
+      <input id="input-branch" type="text" placeholder="main" autocomplete="off">
+    </label>
+    <label class="campo">
+      <span>Token de acceso personal (fine-grained, permiso Contents: Read and write)</span>
+      <input id="input-token" type="password" placeholder="github_pat_..." autocomplete="off">
+    </label>
+
+    <button id="btn-guardar-ajustes" class="btn-principal">Guardar</button>
+    <button id="btn-probar-conexion" class="btn-secundario">Probar conexión</button>
+    <p id="ajustes-estado" class="ajustes-estado"></p>
+  </section>
+
+</main>
+
+<nav class="tabbar">
+  <button class="tab-btn activa" data-pantalla="cierre">Cierre</button>
+  <button class="tab-btn" data-pantalla="ajustes">Ajustes</button>
+</nav>
+
+<div id="toast" class="toast"></div>
+<div id="loading-overlay" class="loading-overlay"><div class="spinner"></div></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

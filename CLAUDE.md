@@ -16,7 +16,7 @@ repositorio**, escrito desde el navegador vía la API de contenidos de GitHub
 PAT que el usuario pega en Ajustes y que se guarda solo en `localStorage`
 (nunca en el repo).
 
-## Dos webs independientes
+## Dos webs independientes (más silos por punto)
 
 - **`/venta/`** — la usan los voluntarios en cada punto de venta: registrar
   ventas y consultar su propio historial.
@@ -24,6 +24,18 @@ PAT que el usuario pega en Ajustes y que se guarda solo en `localStorage`
   está enlazada desde `/venta/` ni se reparte a los voluntarios; la propia
   URL sin publicitar es el único control de acceso (no hay autenticación
   real).
+- **`/ventajuan/` + `/cajajuan/`** — mismo patrón que `/venta/` + `/caja/`
+  pero para un punto de venta que debe quedar fuera del sistema
+  multipunto general (no aparece en `puntos_venta.json` ni en el selector
+  de `/venta/`, ni en el consolidado de `/caja/`): son copias reducidas a
+  un único punto fijo, sin selector ni fetch de `puntos_venta.json`, con
+  su propio catálogo (`data/articulos_<punto>.json`, sin `puntos_venta:
+  [...]` porque no hay que filtrar). Es el mecanismo a seguir si hace
+  falta aislar otro punto de venta del resto: duplicar `venta/` y `caja/`
+  bajo `/venta<id>/` y `/caja<id>/`, fijar el punto activo como constante
+  en vez de leerlo de un selector, y darle su propio
+  `data/articulos_<id>.json`. Ambas siguen importando la lógica
+  compartida de `js/api-github.js` igual que las webs generales.
 
 Ambas importan la lógica compartida desde `js/api-github.js` (config de
 conexión, wrapper de la API de GitHub con reintento por SHA, y helpers puros
