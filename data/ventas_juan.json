@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "v_135d3a6b-49a9-49a9-8fcc-a31a22a007e9",
+    "fecha": "2026-08-26T09:25:56.912Z",
+    "items": [
+      {
+        "nombre": "Espumoso Botella",
+        "precio": 25,
+        "cantidad": 1
+      }
+    ],
+    "total": 25,
+    "metodo_pago": "Tarjeta",
+    "pagos": [
+      {
+        "metodo": "Tarjeta",
+        "importe": 25
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  }
+]
