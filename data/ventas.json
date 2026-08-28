@@ -33,5 +33,35 @@
     ],
     "anulada": false,
     "cierre_id": null
+  },
+  {
+    "id": "v_bba6833d-c1ca-48c4-ba6d-5a07cbda1bf0",
+    "fecha": "2026-08-28T19:16:37.662Z",
+    "items": [
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 1
+      }
+    ],
+    "total": 18,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 10
+      },
+      {
+        "metodo": "Tarjeta",
+        "importe": 8
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
   }
 ]
