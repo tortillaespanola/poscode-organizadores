@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "c_81ba72f8-0177-4293-8aee-b2eae2671f3a",
+    "fecha": "2026-08-28T19:17:01.636Z",
+    "total_cash": 60,
+    "total_twint": 7,
+    "total_tarjeta": 8,
+    "total": 75,
+    "num_ventas": 2,
+    "venta_ids": [
+      "v_949c56a7-acdf-4684-ab32-e719f7ee45ef",
+      "v_bba6833d-c1ca-48c4-ba6d-5a07cbda1bf0",
+      "v_d9183874-c9fb-4eb2-8d00-ffb807b2c1d3"
+    ]
+  }
+]
