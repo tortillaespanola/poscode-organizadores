@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "v_949c56a7-acdf-4684-ab32-e719f7ee45ef",
+    "fecha": "2026-08-28T09:55:24.366Z",
+    "items": [
+      {
+        "nombre": "Pincho",
+        "precio": 6,
+        "cantidad": 2
+      },
+      {
+        "nombre": "Rebujito",
+        "precio": 6,
+        "cantidad": 1
+      },
+      {
+        "nombre": "Tortilla Entera",
+        "precio": 39,
+        "cantidad": 1
+      }
+    ],
+    "total": 57,
+    "metodo_pago": "Mixto",
+    "pagos": [
+      {
+        "metodo": "Cash",
+        "importe": 50
+      },
+      {
+        "metodo": "Twint",
+        "importe": 7
+      }
+    ],
+    "anulada": false,
+    "cierre_id": null
+  }
+]
