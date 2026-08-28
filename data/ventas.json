@@ -32,7 +32,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_81ba72f8-0177-4293-8aee-b2eae2671f3a"
   },
   {
     "id": "v_bba6833d-c1ca-48c4-ba6d-5a07cbda1bf0",
@@ -62,7 +62,7 @@
       }
     ],
     "anulada": false,
-    "cierre_id": null
+    "cierre_id": "c_81ba72f8-0177-4293-8aee-b2eae2671f3a"
   },
   {
     "id": "v_d9183874-c9fb-4eb2-8d00-ffb807b2c1d3",
@@ -88,6 +88,6 @@
       }
     ],
     "anulada": true,
-    "cierre_id": null
+    "cierre_id": "c_81ba72f8-0177-4293-8aee-b2eae2671f3a"
   }
 ]
